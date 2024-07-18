@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Plantas", description = "Gerenciamento de plantas")
 public interface PlantasControllerOpenApi {
-    @Operation(summary = "Obter todas as plantas", description = "Recupera uma lista de todas as plantas cadastradas.")
-    @ApiResponse(responseCode = "200", description = "Lista de plantas recuperada com sucesso.")
+    @Operation(summary = "Cadastrar planta", description = "Cadastra uma planta")
+    @ApiResponse(responseCode = "201", description = "Planta cadastrada com sucesso!!")
     PlantaModelResponse cadastrarPlanta(PlantaModelRequest plantaModelRequest);
 }
