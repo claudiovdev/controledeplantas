@@ -1,5 +1,6 @@
 package com.gerenciadordeplantas.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gerenciadordeplantas.domain.enums.StatusPlanta;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +23,9 @@ public class Planta {
     @Column(nullable = true)
     private String nome;
     @Column(nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'")
     private LocalDateTime dataPlantio;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'")
     private LocalDateTime dataGerminacao;
     private Long quantidadeSementes;
     private Long quantidadeGerminadas;

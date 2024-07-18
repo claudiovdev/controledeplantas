@@ -1,5 +1,6 @@
 package com.gerenciadordeplantas.api.model.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -19,7 +20,8 @@ public class PlantaModelResponse {
     private String especie;
     @Schema(example = "Morango")
     private String nome;
-    @Schema(example = "2024-07-18T18:36:48.7756511")
+    @Schema(example = "18-07-2024T18:45:46Z")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'")
     private LocalDateTime dataPlantio;
     @Schema(example = "1")
     private Long quantidadeSementes;
