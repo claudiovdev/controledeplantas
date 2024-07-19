@@ -1,5 +1,6 @@
 package com.gerenciadordeplantas.api.execptionhandler;
 
+import com.gerenciadordeplantas.domain.exception.EntidadeNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -70,6 +72,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler  {
         return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
     }
 
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        TipoDoProblema tipoDoProblema = TipoDoProblema.ENTIDADE_NAO_ENCONTRADA;
+        String detalhe = ex.getMessage();
+        Problema problema = createProbemBuilder(status, tipoDoProblema, detalhe).build();
+        return handleExceptionInternal(ex, problema, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     private ResponseEntity<Object> handleValidationInternal(Exception ex, HttpHeaders headers, HttpStatusCode status, WebRequest request, BindingResult bindingResult) {
         String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
         TipoDoProblema problemType = TipoDoProblema.PARAMETRO_INVALIDO;
@@ -102,7 +113,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler  {
                 .type(problemType.getUri())
                 .title(problemType.getTitle())
                 .detail(detail)
-                .timestemp(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))));
+                .timestemp(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ss"))));
     }
 
 

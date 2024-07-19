@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -25,6 +26,16 @@ public class PlantasController implements PlantasControllerOpenApi {
     public PlantaModelResponse cadastrarPlanta(@Valid @RequestBody PlantaModelRequest plantaModelRequest){
         var planta = PlantaModelAssembler.toModel(plantaModelRequest);
         return  PlantaModelAssembler.toModelResponse(plantasService.adicionarPlanta(planta));
+    }
+
+    @GetMapping
+    public List<PlantaModelResponse> listarPlantas(){
+        return PlantaModelAssembler.toListModelResponse(plantasService.listarTodos());
+    }
+
+    @GetMapping("{plantaId}")
+    public PlantaModelResponse buscarPlantaPorId(@PathVariable Long plantaId){
+        return PlantaModelAssembler.toModelResponse(plantasService.buscarPorId(plantaId));
     }
 
 }

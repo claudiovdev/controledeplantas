@@ -4,6 +4,9 @@ import com.gerenciadordeplantas.api.model.request.PlantaModelRequest;
 import com.gerenciadordeplantas.api.model.response.PlantaModelResponse;
 import com.gerenciadordeplantas.domain.model.Planta;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PlantaModelAssembler {
     public static PlantaModelResponse toModelResponse(Planta planta){
         var plantaReponse = new PlantaModelResponse();
@@ -23,6 +26,10 @@ public class PlantaModelAssembler {
         planta.setNome(plantaModelRequest.getNome());
         planta.setQuantidadeSementes(plantaModelRequest.getQuantidadeSementes());
         return planta;
+    }
+
+    public static List<PlantaModelResponse> toListModelResponse(List<Planta> plantas){
+        return plantas.stream().map(planta -> toModelResponse(planta)).collect(Collectors.toList());
     }
 
 }
