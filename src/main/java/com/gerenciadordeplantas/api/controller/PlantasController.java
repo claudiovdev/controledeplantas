@@ -38,4 +38,9 @@ public class PlantasController implements PlantasControllerOpenApi {
         return PlantaModelAssembler.toModelResponse(plantasService.buscarPorId(plantaId));
     }
 
+    @DeleteMapping("{plantaId}")
+    public void deletarPlanta(@PathVariable Long plantaId){
+        plantasService.deletarPlanta(plantaId);
+    }
+
 }

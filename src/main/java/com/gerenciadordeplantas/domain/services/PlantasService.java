@@ -31,4 +31,9 @@ public class PlantasService {
     public Planta buscarPorId(Long plantaId) {
         return plantasRepository.findById(plantaId).orElseThrow(() -> new PlantaNaoEncontradaException(plantaId));
     }
+
+    public void deletarPlanta(Long plantaId) {
+        var planta = buscarPorId(plantaId);
+        plantasRepository.delete(planta);
+    }
 }
